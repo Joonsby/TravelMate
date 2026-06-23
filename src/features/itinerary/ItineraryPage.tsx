@@ -7,6 +7,14 @@ import type { ItineraryItem } from './types'
 import TripsPage from '../trips/TripsPage'
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
 
+const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
+  const h = String(Math.floor(i / 2)).padStart(2, '0')
+  const m = i % 2 === 0 ? '00' : '30'
+  return `${h}:${m}`
+})
+
+const inputClass = 'w-full h-10 border border-gray-300 rounded px-2 text-sm bg-white'
+
 export default function ItineraryPage() {
   const selectedTripId = useTripStore((s) => s.selectedTripId)
   const selectedTrip = useSelectedTrip()
@@ -158,7 +166,7 @@ function ItineraryItemsView({
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+              className={inputClass}
               placeholder="예: 도톤보리 저녁 식사"
               required
             />
@@ -173,18 +181,21 @@ function ItineraryItemsView({
                 onChange={(e) => setDayDate(e.target.value)}
                 min={tripStartDate ?? undefined}
                 max={tripEndDate ?? undefined}
-                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+                className={inputClass}
               />
             </div>
             <div>
               <label className="block text-xs text-gray-500 mb-1">시간 (선택)</label>
-              <input
-                type="time"
+              <select
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                step={1800}
-                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
-              />
+                className={inputClass}
+              >
+                <option value="">시간 선택 안함</option>
+                {TIME_OPTIONS.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -194,7 +205,7 @@ function ItineraryItemsView({
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+              className={inputClass}
               placeholder="예: 도톤보리"
             />
           </div>
@@ -314,7 +325,7 @@ function ItineraryCard({
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+              className={inputClass}
               required
             />
           </div>
@@ -328,17 +339,21 @@ function ItineraryCard({
                 onChange={(e) => setDayDate(e.target.value)}
                 min={tripStartDate ?? undefined}
                 max={tripEndDate ?? undefined}
-                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+                className={inputClass}
               />
             </div>
             <div>
               <label className="block text-xs text-gray-500 mb-1">시간</label>
-              <input
-                type="time"
+              <select
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
-              />
+                className={inputClass}                
+              >
+                <option value="">시간 선택 안함</option>
+                {TIME_OPTIONS.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -348,7 +363,7 @@ function ItineraryCard({
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+              className={inputClass}
             />
           </div>
 
