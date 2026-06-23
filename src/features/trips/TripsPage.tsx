@@ -21,7 +21,7 @@ export default function TripsPage() {
   const [endDate, setEndDate] = useState('')
   const [createError, setCreateError] = useState<string | null>(null)
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setCreateError(null)
     createTrip(
@@ -171,7 +171,7 @@ function TripCard({
     setEditing(true)
   }
 
-  function handleUpdate(e: React.FormEvent) {
+  function handleUpdate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     updateTrip(
       { id: trip.id, title, start_date: startDate, end_date: endDate },
@@ -283,6 +283,7 @@ function TripCard({
           isDeleting={isDeleting}
           deleteTitle="여행 삭제"
           deleteDescription="이 여행을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다."
+          editVariant="gray"
         />
       )}
     </li>

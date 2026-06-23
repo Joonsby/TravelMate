@@ -1,12 +1,18 @@
 // 카드 항목의 수정/삭제 버튼 공통 컴포넌트
 import { ConfirmDialog } from './ConfirmDialog'
 
+const editVariantClass = {
+  blue: 'bg-blue-50 border border-blue-200 text-blue-500 active:bg-blue-100',
+  gray: 'bg-gray-50 border border-gray-200 text-gray-600 active:bg-gray-100',
+}
+
 interface CardActionsProps {
   onEdit: () => void
   onDelete: () => void
   isDeleting?: boolean
   deleteTitle?: string
   deleteDescription?: string
+  editVariant?: keyof typeof editVariantClass
 }
 
 export function CardActions({
@@ -15,12 +21,13 @@ export function CardActions({
   isDeleting = false,
   deleteTitle = '삭제',
   deleteDescription = '삭제하시겠습니까? 삭제 후 복구할 수 없습니다.',
+  editVariant = 'blue',
 }: CardActionsProps) {
   return (
     <div className="flex gap-2 pt-2" onClick={(e) => e.stopPropagation()}>
       <button
         onClick={onEdit}
-        className="flex-1 py-2 rounded-lg bg-blue-50 border border-blue-200 text-blue-500 text-sm font-medium active:bg-blue-100"
+        className={`flex-1 py-2 rounded-lg text-sm font-medium ${editVariantClass[editVariant]}`}
       >
         수정
       </button>
