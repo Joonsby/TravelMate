@@ -13,7 +13,8 @@ const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
   return `${h}:${m}`
 })
 
-const inputClass = 'w-full h-10 border border-gray-300 rounded px-2 text-sm bg-white'
+const inputClass = 'w-full h-10 border border-gray-300 rounded px-3 text-sm bg-white'
+const dateInputClass = `${inputClass} appearance-none`
 
 export default function ItineraryPage() {
   const selectedTripId = useTripStore((s) => s.selectedTripId)
@@ -181,7 +182,7 @@ function ItineraryItemsView({
                 onChange={(e) => setDayDate(e.target.value)}
                 min={tripStartDate ?? undefined}
                 max={tripEndDate ?? undefined}
-                className={inputClass}
+                className={dateInputClass}
               />
             </div>
             <div>
@@ -339,7 +340,7 @@ function ItineraryCard({
                 onChange={(e) => setDayDate(e.target.value)}
                 min={tripStartDate ?? undefined}
                 max={tripEndDate ?? undefined}
-                className={inputClass}
+                className={dateInputClass}
               />
             </div>
             <div>
