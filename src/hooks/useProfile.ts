@@ -1,22 +1,15 @@
 // 현재 로그인한 사용자의 profiles 행을 React Query로 조회하는 훅
 import { useQuery } from '@tanstack/react-query'
-import { supabase } from '../lib/supabase'
 import { useAuthStore } from '../store/authStore'
+import { fetchMyProfile } from '../features/profile/api'
+import type { Profile } from '../features/profile/types'
 
 export function useProfile() {
   const user = useAuthStore((s) => s.user)
 
-  return useQuery({
+  return useQuery<Profile>({
     queryKey: ['profile', user?.id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('display_name, avatar_url, couple_id')
-        .eq('id', user!.id)
-        .single()
-      if (error) throw error
-      return data
-    },
+    queryFn: () => fetchMyProfile(user!.id),
     enabled: !!user,
   })
 }

@@ -7,6 +7,7 @@ import ChatPage from '../features/chat/ChatPage'
 import NotesPage from '../features/notes/NotesPage'
 import ChecklistPage from '../features/checklist/ChecklistPage'
 import ExpensePage from '../features/expense/ExpensePage'
+import ProfilePage from '../features/profile/ProfilePage'
 
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
           { path: 'notes',     element: <NotesPage /> },
           { path: 'checklist', element: <ChecklistPage /> },
           { path: 'expense',   element: <ExpensePage /> },
+          { path: 'profile',   element: <ProfilePage /> },
         ],
       },
     ],

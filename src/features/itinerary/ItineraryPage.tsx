@@ -1,5 +1,6 @@
+// 일정 탭 진입점 — 현재 단계: trips 목록/생성
+import TripsPage from '../trips/TripsPage'
+
 export default function ItineraryPage() {
-  return (
-    <div className="p-4 text-gray-400 text-sm">일정 (준비 중)</div>
-  )
+  return <TripsPage />
 }
