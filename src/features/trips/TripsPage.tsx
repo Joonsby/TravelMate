@@ -1,12 +1,15 @@
-// 여행 목록 조회 및 생성 화면 (RLS 검증 포함)
+// 여행 목록 조회/생성/선택 화면
 import { useState } from 'react'
 import { useTrips } from '../../hooks/useTrips'
 import { useCreateTrip } from '../../hooks/useCreateTrip'
+import { useTripStore } from '../../store/tripStore'
 import type { Trip } from './types'
 
 export default function TripsPage() {
   const { data: trips, isLoading, error } = useTrips()
   const { mutate: createTrip, isPending } = useCreateTrip()
+  const selectedTripId = useTripStore((s) => s.selectedTripId)
+  const setSelectedTripId = useTripStore((s) => s.setSelectedTripId)
 
   const [showForm, setShowForm] = useState(false)
   const [title, setTitle] = useState('')
@@ -20,7 +23,8 @@ export default function TripsPage() {
     createTrip(
       { title, start_date: startDate, end_date: endDate },
       {
-        onSuccess: () => {
+        onSuccess: (newTrip) => {
+          setSelectedTripId(newTrip.id)
           setTitle('')
           setStartDate('')
           setEndDate('')
@@ -123,16 +127,39 @@ export default function TripsPage() {
       )}
 
       <ul className="space-y-2">
-        {trips?.map((trip) => <TripCard key={trip.id} trip={trip} />)}
+        {trips?.map((trip) => (
+          <TripCard
+            key={trip.id}
+            trip={trip}
+            isSelected={selectedTripId === trip.id}
+            onSelect={setSelectedTripId}
+          />
+        ))}
       </ul>
     </div>
   )
 }
 
-function TripCard({ trip }: { trip: Trip }) {
+function TripCard({
+  trip,
+  isSelected,
+  onSelect,
+}: {
+  trip: Trip
+  isSelected: boolean
+  onSelect: (id: string) => void
+}) {
   return (
-    <li className="border border-gray-200 rounded-lg p-3 space-y-1">
-      <p className="font-medium text-sm">{trip.title}</p>
+    <li
+      onClick={() => onSelect(trip.id)}
+      className={`border rounded-lg p-3 space-y-1 cursor-pointer active:opacity-70 transition-colors ${
+        isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'
+      }`}
+    >
+      <div className="flex items-center justify-between">
+        <p className="font-medium text-sm">{trip.title}</p>
+        {isSelected && <span className="text-blue-500 text-xs font-medium">✓ 선택됨</span>}
+      </div>
       <p className="text-xs text-gray-400">
         {trip.start_date ?? '-'} ~ {trip.end_date ?? '-'}
       </p>
