@@ -153,12 +153,18 @@ function TripCard({
     <li
       onClick={() => onSelect(trip.id)}
       className={`border rounded-lg p-3 space-y-1 cursor-pointer active:opacity-70 transition-colors ${
-        isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'
+        isSelected
+          ? 'border-blue-500 bg-blue-50 ring-1 ring-blue-400'
+          : 'border-gray-200 bg-white'
       }`}
     >
       <div className="flex items-center justify-between">
-        <p className="font-medium text-sm">{trip.title}</p>
-        {isSelected && <span className="text-blue-500 text-xs font-medium">✓ 선택됨</span>}
+        <p className={`font-medium text-sm ${isSelected ? 'text-blue-700' : ''}`}>{trip.title}</p>
+        {isSelected && (
+          <span className="bg-blue-500 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+            ✓ 선택됨
+          </span>
+        )}
       </div>
       <p className="text-xs text-gray-400">
         {trip.start_date ?? '-'} ~ {trip.end_date ?? '-'}
