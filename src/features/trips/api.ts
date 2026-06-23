@@ -5,11 +5,11 @@ import type { Trip, CreateTripInput } from './types'
 export async function fetchTrips(): Promise<Trip[]> {
   const { data, error } = await supabase
     .from('trips')
-    .select('id, couple_id, title, destination, start_date, end_date, created_at')
+    .select('id, couple_id, title, destination, start_date, end_date, cover_image_url, created_at')
     .order('created_at', { ascending: false })
 
   if (error) throw error
-  return data
+  return data;
 }
 
 export async function createTrip(input: CreateTripInput): Promise<Trip> {

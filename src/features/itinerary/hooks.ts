@@ -1,7 +1,7 @@
 // itinerary_items TanStack Query 훅
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { fetchItineraryItems, createItineraryItem, updateItineraryItem, deleteItineraryItem } from './api'
-import type { CreateItineraryItemInput, UpdateItineraryItemInput, DeleteItineraryItemInput } from './types'
+import type { UpdateItineraryItemInput, DeleteItineraryItemInput } from './types'
 
 export function useItineraryItems(tripId: string | null) {
   return useQuery({
