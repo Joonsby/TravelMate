@@ -16,3 +16,10 @@ export interface CreateTripInput {
   start_date: string
   end_date: string
 }
+
+export interface UpdateTripInput {
+  id: string
+  title: string
+  start_date: string
+  end_date: string
+}

@@ -5,7 +5,7 @@ import { useSelectedTrip } from '../../hooks/useSelectedTrip'
 import { useItineraryItems, useCreateItineraryItem, useUpdateItineraryItem, useDeleteItineraryItem } from './hooks'
 import type { ItineraryItem } from './types'
 import TripsPage from '../trips/TripsPage'
-import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
+import { CardActions } from '../../components/ui/CardActions'
 import { inputClass, dateInputClass } from '../../lib/inputStyles'
 
 const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
@@ -412,30 +412,13 @@ function ItineraryCard({
       {item.memo && (
         <p className="text-xs text-gray-400 mt-1 whitespace-pre-wrap">{item.memo}</p>
       )}
-      <div className="flex gap-2 pt-1">
-        <button
-          onClick={openEdit}
-          className="text-xs text-blue-500 active:text-blue-700"
-        >
-          수정
-        </button>
-        <ConfirmDialog
-          title="일정 삭제"
-          description="이 일정을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다."
-          confirmText="삭제"
-          cancelText="취소"
-          onConfirm={() => deleteItem({ id: item.id, trip_id: item.trip_id })}
-          disabled={isDeleting}
-          trigger={
-            <button
-              disabled={isDeleting}
-              className="text-xs text-red-400 active:text-red-600 disabled:opacity-50"
-            >
-              {isDeleting ? '삭제 중...' : '삭제'}
-            </button>
-          }
-        />
-      </div>
+      <CardActions
+        onEdit={openEdit}
+        onDelete={() => deleteItem({ id: item.id, trip_id: item.trip_id })}
+        isDeleting={isDeleting}
+        deleteTitle="일정 삭제"
+        deleteDescription="이 일정을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다."
+      />
     </li>
   )
 }

@@ -1,6 +1,6 @@
-// trips 테이블 Supabase 조회/생성 함수
+// trips 테이블 Supabase 조회/생성/수정/삭제 함수
 import { supabase } from '../../lib/supabase'
-import type { Trip, CreateTripInput } from './types'
+import type { Trip, CreateTripInput, UpdateTripInput } from './types'
 
 export async function fetchTrips(): Promise<Trip[]> {
   const { data, error } = await supabase
@@ -21,4 +21,21 @@ export async function createTrip(input: CreateTripInput): Promise<Trip> {
 
   if (error) throw error
   return data
+}
+
+export async function updateTrip({ id, ...input }: UpdateTripInput): Promise<Trip> {
+  const { data, error } = await supabase
+    .from('trips')
+    .update(input)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function deleteTrip(id: string): Promise<void> {
+  const { error } = await supabase.from('trips').delete().eq('id', id)
+  if (error) throw error
 }
