@@ -4,6 +4,7 @@ import { useTrips } from '../../hooks/useTrips'
 import { useCreateTrip } from '../../hooks/useCreateTrip'
 import { useTripStore } from '../../store/tripStore'
 import type { Trip } from './types'
+import { inputClass, dateInputClass } from '../../lib/inputStyles'
 
 export default function TripsPage() {
   const { data: trips, isLoading, error } = useTrips()
@@ -76,20 +77,20 @@ export default function TripsPage() {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+              className={inputClass}
               placeholder="예: 오사카 여름 여행"
               required
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="flex flex-col gap-2">
             <div>
               <label className="block text-xs text-gray-500 mb-1">시작일</label>
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+                className={dateInputClass}
                 required
               />
             </div>
@@ -99,7 +100,7 @@ export default function TripsPage() {
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm bg-white"
+                className={dateInputClass}
                 required
               />
             </div>

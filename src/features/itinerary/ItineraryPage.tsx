@@ -6,15 +6,13 @@ import { useItineraryItems, useCreateItineraryItem, useUpdateItineraryItem, useD
 import type { ItineraryItem } from './types'
 import TripsPage from '../trips/TripsPage'
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
+import { inputClass, dateInputClass } from '../../lib/inputStyles'
 
 const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
   const h = String(Math.floor(i / 2)).padStart(2, '0')
   const m = i % 2 === 0 ? '00' : '30'
   return `${h}:${m}`
 })
-
-const inputClass = 'w-full h-10 border border-gray-300 rounded px-3 text-sm bg-white'
-const dateInputClass = `${inputClass} appearance-none`
 
 export default function ItineraryPage() {
   const selectedTripId = useTripStore((s) => s.selectedTripId)
